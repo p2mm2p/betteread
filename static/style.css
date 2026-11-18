@@ -1,0 +1,51 @@
+:root {
+  --accent: #2563eb;
+  --accent-soft: #e8efff;
+  --accent-ink: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --accent: #7ea2ff;
+    --accent-soft: #1d2640;
+    --accent-ink: #0d1226;
+  }
+}
+
+.select {
+  min-width: 132px;
+  height: 34px;
+  padding: 0 8px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.color-input {
+  width: 132px;
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  outline: 0;
+  text-transform: lowercase;
+}
+
+.color-input:focus,
+.select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.notice:empty {
+  display: none;
+}
+
+.card.pad {
+  padding: 12px;
+}
+
+.card.pad.stack {
+  gap: 12px;
+}
