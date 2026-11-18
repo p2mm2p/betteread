@@ -6,20 +6,15 @@ pub const HIGHLIGHT_NAME: &str = "betteread-active";
 const DEFAULT_COLOR: &str = "#ffd54f";
 
 /// 活动句子的高亮样式。
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "lowercase"))]
 pub enum HighlightStyle {
     /// 使用下划线。
+    #[default]
     Underline,
     /// 使用背景色块。
     Block,
-}
-
-impl Default for HighlightStyle {
-    fn default() -> Self {
-        Self::Underline
-    }
 }
 
 impl HighlightStyle {

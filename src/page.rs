@@ -190,10 +190,10 @@ impl HighlightHandle {
 
     /// 移除活动高亮。
     pub fn clear(&self) {
-        if let Ok(delete) = Reflect::get(&self.highlights, &JsValue::from_str("delete")) {
-            if let Ok(delete) = delete.dyn_into::<Function>() {
-                let _ = delete.call1(&self.highlights, &JsValue::from_str(HIGHLIGHT_NAME));
-            }
+        if let Ok(delete) = Reflect::get(&self.highlights, &JsValue::from_str("delete"))
+            && let Ok(delete) = delete.dyn_into::<Function>()
+        {
+            let _ = delete.call1(&self.highlights, &JsValue::from_str(HIGHLIGHT_NAME));
         }
     }
 }

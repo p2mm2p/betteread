@@ -69,6 +69,8 @@ struct State {
     navigation: Navigation,
 }
 
+type StorageListener = (JsValue, Closure<dyn FnMut(JsValue, JsValue)>);
+
 impl Session {
     fn start(loaded: ReadingSettings) -> Result<Option<Self>, String> {
         let window = web_sys::window().ok_or_else(|| "no browser window".to_string())?;
@@ -182,9 +184,7 @@ impl Session {
     }
 }
 
-fn install_storage_listener(
-    state: &Rc<RefCell<State>>,
-) -> Result<(JsValue, Closure<dyn FnMut(JsValue, JsValue)>), String> {
+fn install_storage_listener(state: &Rc<RefCell<State>>) -> Result<StorageListener, String> {
     let chrome = Reflect::get(&js_sys::global(), &JsValue::from_str("chrome")).map_err(js_error)?;
     if chrome.is_undefined() || chrome.is_null() {
         return Err("chrome.storage is unavailable in this page".to_string());
@@ -297,7 +297,9 @@ fn schedule_rebuild(state: &Rc<RefCell<State>>) {
     let callback: Function = Closure::once_into_js(move || rebuild(&state)).unchecked_into();
     match window.set_timeout_with_callback_and_timeout_and_arguments_0(&callback, 160) {
         Ok(timeout) => REBUILD_TIMEOUT.with(|slot| slot.set(Some(timeout))),
-        Err(error) => oxichrome::log!("could not schedule layout refresh: {}", js_error(error)),
+        Err(error) => {
+            oxichrome::log!("could not schedule layout refresh: {}", js_error(error));
+        }
     }
 }
 
