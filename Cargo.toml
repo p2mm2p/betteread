@@ -1,0 +1,69 @@
+[package]
+name = "betteread"
+version.workspace = true
+edition.workspace = true
+description = "一款帮助提高网页阅读专注度的浏览器插件。以句子为单位增加高亮，使用 `vim` 模式移动阅读。"
+
+[lints]
+workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[profile.release]
+opt-level = "s"
+lto = true
+
+[dependencies]
+brcore.workspace = true
+js-sys.workspace = true
+leptos.workspace = true
+oxichrome.workspace = true
+serde.workspace = true
+wasm-bindgen.workspace = true
+wasm-bindgen-futures.workspace = true
+web-sys.workspace = true
+
+[workspace]
+resolver = "3"
+members = ["core"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+
+[workspace.lints.rust]
+missing_docs = "warn"
+
+[workspace.dependencies]
+brcore = { path = "core", features = ["serde"] }
+
+icu_segmenter = { version = "2.4", default-features = false, features = ["compiled_data"] }
+serde = { version = "1", features = ["derive"] }
+
+oxichrome = { git = "https://github.com/0xsouravm/oxichrome", rev = "f36ed22c007541e47308904ee925e21aa544e431" }
+leptos = { version = "0.8", features = ["csr"] }
+js-sys = "0.3.85"
+wasm-bindgen = "0.2.108"
+wasm-bindgen-futures = "0.4.58"
+web-sys = { version = "0.3.85", features = [
+    "console",
+    "Document",
+    "DomRect",
+    "DomRectList",
+    "Element",
+    "Event",
+    "EventTarget",
+    "HtmlElement",
+    "HtmlStyleElement",
+    "KeyboardEvent",
+    "MutationObserver",
+    "MutationObserverInit",
+    "MutationRecord",
+    "Node",
+    "NodeFilter",
+    "Range",
+    "Text",
+    "TreeWalker",
+    "Window",
+] }

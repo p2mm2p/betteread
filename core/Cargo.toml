@@ -1,0 +1,15 @@
+[package]
+name = "brcore"
+version.workspace = true
+edition.workspace = true
+description = "BettRead 的纯阅读模型，不依赖浏览器 API。"
+
+[lints]
+workspace = true
+
+[dependencies]
+icu_segmenter.workspace = true
+serde = { workspace = true, optional = true }
+
+[features]
+serde = ["dep:serde"]
